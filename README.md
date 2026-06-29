@@ -1,1 +1,1 @@
-# The source codes and checkpoints for EfficRAG will be released soon~
+# The source codes and checkpoints for GRENet will be released soon~
