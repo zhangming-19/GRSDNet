@@ -1,0 +1,97 @@
+data_info:
+  data_dir: ./data
+  wav_dir: ./data/kaggle  ### donateacry kaggle
+  raw_wav_dir: ./data/raw_data/kaggle  ### donateacry kaggle
+  model_dir: ./pth/k  ### d k
+  feat_dir: ./feat/k  ###
+  n_mels: 128
+  n_fft: 1024
+  hop_hength: 512
+  mach_index:  ###
+    #0: 'belly_pain'
+    #1: 'burping'
+    #2: 'discomfort'
+    #3: 'hungry'
+    #4: 'tired'
+    0: 'awake'
+    1: 'hug'
+    2: 'hungry'
+    3: 'sleepy'
+    4: 'uncomfort'
+
+man_control:
+  loss_choice: 'CrossE'
+  data_names: 'logmel'
+  model_name: 'CNNE'  # 'MobileNetV2', 'CNNL', 'ResNet18','CNN'
+  cuda: 0
+  mode: 'test'  # train, test
+  cur_dataset: 'kaggle'  ### kaggle donateacry
+  train_pickle: 'train_logmel.joblib'
+  valid_pickle: 'valid_logmel.joblib'
+  test_pickle: 'test_logmel.joblib'  # test_Tarlogmel test_logmel
+  fs: 16000  ### 8000 16000
+  wav_time: 15  ### 7 15
+  wav_time_frames: 469  ### 110  469
+  test_multi: 0.2
+  data_name: 'logmel'
+  premodel_ext: False # True
+  zero_normal: True
+  feat_normal: True  # True False
+
+  leaf_batch: 64
+  pre_batch: 120
+  ext_mode: 3
+
+  da: False  # True False
+  da_multi: 2  # donateacry
+
+
+train:
+  emb_dim:
+    'MobileNetV2': 1280  # 1280 mobile   512 resnet
+    'ResNetL': 512
+    'ResNet18': 512
+    'CNN4': 1
+    'CNN19': 1
+    'LuNet': 1
+    'LuNet_fro1': 1
+    'LuNet_fro2': 1
+    'LuNet_fro3': 1
+    'LuNet_fro4': 1
+    'LuNet_fro5': 1
+    'LuNet_fro6': 1
+    'LuNet_fro8': 1
+    'ResNet32': 1
+    'ResNet34': 1
+
+  input_dim: 1  # 101 1 2
+  seed: 25634  # 25634  65536
+  batch_size: 128  # 32
+  epoch: 100  # 100 500*
+  lr: 0.0001  # 0.0001 0.03*
+  weight_decay: 3e-5  #3e-5  1e-4*
+  decimal_count: 6  # loss
+  loss_thre: 0.005
+  class_num: 5
+  num_workers: 0
+
+
+da:
+  # Shift Audio
+  shift_min: 0.1
+  shift_max: 0.3
+  # Change Tempo
+  tempo_min: 0.8
+  tempo_max: 1.2
+  tempo_stride: 0.05
+  # Add noise
+  noise_min_factor: 0.1
+  noise_max_factor: 0.2
+  noise_stride: 0.05
+  noise_time_min: 0.2
+  noise_time_max: 0.4
+  # Pitch Shifting
+  pitch_min: -2
+  pitch_max: 2
+  pitch_stride: 0.05
+
