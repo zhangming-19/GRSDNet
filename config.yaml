@@ -1,97 +1,85 @@
 data_info:
-  data_dir: ./data
-  wav_dir: ./data/kaggle  ### donateacry kaggle
-  raw_wav_dir: ./data/raw_data/kaggle  ### donateacry kaggle
-  model_dir: ./pth/k  ### d k
-  feat_dir: ./feat/k  ###
+  data_dir: ../sasr/data/dcase2025
+  ### dcase20 ../bifilter/data/wav
+  ### dcase22 ../contralearn_new/data/wav
+  ### dcase24 ../contralearn/data/wav/ 
+  ### dcase25 ../dcase25/data/wav
+  wav_dir: ../sasr/data/dcase2025   # ./preprocess/wav ../contralearn/data/wav/
+  pth_dir: ./pth
+  feat_dir: ./feat  # ../edgefilter_new/feat  # ./feat
+  result_dir: ./results
+  fs: 16000
   n_mels: 128
   n_fft: 1024
-  hop_hength: 512
-  mach_index:  ###
-    #0: 'belly_pain'
-    #1: 'burping'
-    #2: 'discomfort'
-    #3: 'hungry'
-    #4: 'tired'
-    0: 'awake'
-    1: 'hug'
-    2: 'hungry'
-    3: 'sleepy'
-    4: 'uncomfort'
+  hop_length: 512
+  tar_time: 10
 
-man_control:
-  loss_choice: 'CrossE'
-  data_names: 'logmel'
-  model_name: 'CNNE'  # 'MobileNetV2', 'CNNL', 'ResNet18','CNN'
-  cuda: 0
-  mode: 'test'  # train, test
-  cur_dataset: 'kaggle'  ### kaggle donateacry
-  train_pickle: 'train_logmel.joblib'
-  valid_pickle: 'valid_logmel.joblib'
-  test_pickle: 'test_logmel.joblib'  # test_Tarlogmel test_logmel
-  fs: 16000  ### 8000 16000
-  wav_time: 15  ### 7 15
-  wav_time_frames: 469  ### 110  469
-  test_multi: 0.2
-  data_name: 'logmel'
-  premodel_ext: False # True
-  zero_normal: True
+mach_index:
+  0: 'fan'
+  1: 'gearbox'
+  2: 'bearing'
+  3: 'slider'
+  4: 'valve'
+  5: 'ToyCar'
+  6: 'ToyTrain'
+
+feat:
+  zero_normal: True  # True False
   feat_normal: True  # True False
-
-  leaf_batch: 64
-  pre_batch: 120
-  ext_mode: 3
-
-  da: False  # True False
-  da_multi: 2  # donateacry
-
+  cur_domain: 'source'  # source target
+  secID: '00'  # 00 01 02
 
 train:
-  emb_dim:
+  # control
+  cuda: 0
+  mode: 'train'  # train, test
+  feat_path: ''
+  train_joblib: 'train_logmels.joblib'
+  test_joblib: 'test_logmels.joblib'
+  learn_method: 'Contrastive'  # 'Contrastive' , 'False'
+  model_name: 'MobileNetV2'  # 'AE' 'MobileNetV2', 'ResNetL', 'ResNet18'
+  data_name: 'logmels'
+  mixup_choice: ''
+  mixup_lossweight: 0.5
+  choose_model_nums: 1
+  batch_size: 32  # 32  64
+  epoch: 200  # 100 500*
+  lr: 0.03  # 0.0001 CNN 0.03*  AE 0.001
+  weight_decay: 1e-4  # AE 3e-5  1e-4*
+  premodel_ext: 'True' # True False
+  kmean_needtrain: True # True False
+  kmeans_needtest: True
+  kmean_draw3D: 'False'  # True False
+
+  cnn_dims:
     'MobileNetV2': 1280  # 1280 mobile   512 resnet
-    'ResNetL': 512
+    'MobileFaceNet': 128
     'ResNet18': 512
-    'CNN4': 1
-    'CNN19': 1
-    'LuNet': 1
-    'LuNet_fro1': 1
-    'LuNet_fro2': 1
-    'LuNet_fro3': 1
-    'LuNet_fro4': 1
-    'LuNet_fro5': 1
-    'LuNet_fro6': 1
-    'LuNet_fro8': 1
-    'ResNet32': 1
-    'ResNet34': 1
-
-  input_dim: 1  # 101 1 2
-  seed: 25634  # 25634  65536
-  batch_size: 128  # 32
-  epoch: 100  # 100 500*
-  lr: 0.0001  # 0.0001 0.03*
-  weight_decay: 3e-5  #3e-5  1e-4*
-  decimal_count: 6  # loss
+    'ResNet34': 512
+    'VGG': 64
+    'CRNN': 64
+  global_pooling: "gap"  # "gap" "gapgmp" VGG
+  # mlp
+  head_num: 1
+  head_size: 2
+  mlp_hidden_size: 512
+  low_dim: 512
+  # contra loss
+  temp: 0.3  # 0.2* 0.3  [0.05,0.5] 开始，步长为 0.05。 T=0.07
+  contra_loss_weight: 0.1  # 0.3*
+  # stable
+  input_dim: 1
+  seed: 25634
+  threshold_count: 95
+  decimal_count: 6
   loss_thre: 0.005
-  class_num: 5
+  threshold_alpha: 1
+  pauc_value: 0.1
+  class_num: 7
+  detect_num: 2
   num_workers: 0
+  alpha: 1.28
 
-
-da:
-  # Shift Audio
-  shift_min: 0.1
-  shift_max: 0.3
-  # Change Tempo
-  tempo_min: 0.8
-  tempo_max: 1.2
-  tempo_stride: 0.05
-  # Add noise
-  noise_min_factor: 0.1
-  noise_max_factor: 0.2
-  noise_stride: 0.05
-  noise_time_min: 0.2
-  noise_time_max: 0.4
-  # Pitch Shifting
-  pitch_min: -2
-  pitch_max: 2
-  pitch_stride: 0.05
-
+kmeans_model:
+  max_iter: 300
+  tol: 1e-4

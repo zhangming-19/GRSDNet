@@ -18,10 +18,15 @@ This paper proposes GRSDNet, a learnable guided residual spectral decomposition 
 
 ├── config.yaml           # Global experiment configuration, including model and training settings
 
-├── model.py              # Implementation of the proposed model and its main components
+├──dataset              # dtaset joblib generate
+
+├── tools              # train
+
+├── model              # Implementation of the proposed model and its main components
 
 └── README.md             # Project overview, environment setup, usage, and reproduction instructions
 
+More files will be added in the future.
 
 ## Requirements
 We use Conda python 3.8+ and strongly recommend that you create a new environment.
@@ -51,12 +56,12 @@ More details can be find in this [link](https://dcase.community/challenge2025/in
 
 ## Quick Start
 1. Configure Datasets
-Place your hyperspectral datasets in .mat format in the datasets/ directory
+Place your audio datasets in .wav format in the ./data
 
 2. Update config.py to add your dataset paths:
 
 3. Run the Full Pipeline:
-python model.py
+python train.py
 
 4. Output Results
 All results are automatically saved in the ./results/{dataset_name}/ directory:
