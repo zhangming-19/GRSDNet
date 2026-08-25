@@ -46,7 +46,7 @@ More details can be find in this [link](https://dcase.community/challenge2022/in
 ### DCASE 2024 
 More details can be find in this [link](https://dcase.community/challenge2024/index). please request and download the data from the original WORKSHOP.
 
-### DCASE 2024 
+### DCASE 2025 
 More details can be find in this [link](https://dcase.community/challenge2025/index). please request and download the data from the original WORKSHOP.
 
 ## Quick Start
