@@ -9,6 +9,7 @@ This paper proposes GRSDNet, a learnable guided residual spectral decomposition 
 - A guided residual spectral decomposition method improves anomalous sound detection.
 - Local gated patch attention strengthens anomaly-relevant spectral representations.
 - GRSDNet improves cross-domain robustness with marginal computational overhead.
+More files will be added in the future.
 
 ## Project Structure
 
