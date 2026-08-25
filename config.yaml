@@ -1,0 +1,85 @@
+data_info:
+  data_dir: ../sasr/data/dcase2025
+  ### dcase20 ../bifilter/data/wav
+  ### dcase22 ../contralearn_new/data/wav
+  ### dcase24 ../contralearn/data/wav/ 
+  ### dcase25 ../dcase25/data/wav
+  wav_dir: ../sasr/data/dcase2025   # ./preprocess/wav ../contralearn/data/wav/
+  pth_dir: ./pth
+  feat_dir: ./feat  # ../edgefilter_new/feat  # ./feat
+  result_dir: ./results
+  fs: 16000
+  n_mels: 128
+  n_fft: 1024
+  hop_length: 512
+  tar_time: 10
+
+mach_index:
+  0: 'fan'
+  1: 'gearbox'
+  2: 'bearing'
+  3: 'slider'
+  4: 'valve'
+  5: 'ToyCar'
+  6: 'ToyTrain'
+
+feat:
+  zero_normal: True  # True False
+  feat_normal: True  # True False
+  cur_domain: 'source'  # source target
+  secID: '00'  # 00 01 02
+
+train:
+  # control
+  cuda: 0
+  mode: 'train'  # train, test
+  feat_path: ''
+  train_joblib: 'train_logmels.joblib'
+  test_joblib: 'test_logmels.joblib'
+  learn_method: 'Contrastive'  # 'Contrastive' , 'False'
+  model_name: 'MobileNetV2'  # 'AE' 'MobileNetV2', 'ResNetL', 'ResNet18'
+  data_name: 'logmels'
+  mixup_choice: ''
+  mixup_lossweight: 0.5
+  choose_model_nums: 1
+  batch_size: 32  # 32  64
+  epoch: 200  # 100 500*
+  lr: 0.03  # 0.0001 CNN 0.03*  AE 0.001
+  weight_decay: 1e-4  # AE 3e-5  1e-4*
+  premodel_ext: 'True' # True False
+  kmean_needtrain: True # True False
+  kmeans_needtest: True
+  kmean_draw3D: 'False'  # True False
+
+  cnn_dims:
+    'MobileNetV2': 1280  # 1280 mobile   512 resnet
+    'MobileFaceNet': 128
+    'ResNet18': 512
+    'ResNet34': 512
+    'VGG': 64
+    'CRNN': 64
+  global_pooling: "gap"  # "gap" "gapgmp" VGG
+  # mlp
+  head_num: 1
+  head_size: 2
+  mlp_hidden_size: 512
+  low_dim: 512
+  # contra loss
+  temp: 0.3  # 0.2* 0.3  [0.05,0.5] 开始，步长为 0.05。 T=0.07
+  contra_loss_weight: 0.1  # 0.3*
+  # stable
+  input_dim: 1
+  seed: 25634
+  threshold_count: 95
+  decimal_count: 6
+  loss_thre: 0.005
+  threshold_alpha: 1
+  pauc_value: 0.1
+  class_num: 7
+  detect_num: 2
+  num_workers: 0
+  alpha: 1.28
+
+kmeans_model:
+  max_iter: 300
+  tol: 1e-4
